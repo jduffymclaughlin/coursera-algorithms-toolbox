@@ -1,7 +1,9 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class MajorityElement {
+public class QuickSort {
+    //private static Random rand = new Random();
+
 
     private static ArrayList<Integer> quickSort(ArrayList<Integer> arr) {
 
@@ -36,47 +38,21 @@ public class MajorityElement {
     }
 
 
-    private static int getMajorityElement(ArrayList<Integer> a, int left, int right) {
-        if (left == right) {
-            return -1;
-        }
-        if (left + 1 == right) {
-            return a.get(left);
-        }
-
-        for (int i = 0; i < a.size(); i++) {
-            int count = 0;
-
-            for (int j = 0; j < a.size(); j++) {
-                if (a.get(i) == a.get(j)) {
-                    count++;
-                }
-            }
-
-            if (count > Math.ceil(a.size() / 2)) {
-                return 1;
-            }
-        }
-
-        return -1;
-    }
-
-
-
     public static void main(String[] args) {
         FastScanner scanner = new FastScanner(System.in);
         int n = scanner.nextInt();
+        //int[] a = new int[n];
         ArrayList<Integer> a = new ArrayList<Integer>();
         for (int i = 0; i < n; i++) {
             a.add(scanner.nextInt());
         }
-
-        if (getMajorityElement(quickSort(a), 0, a.size()) != -1) {
-            System.out.println(1);
-        } else {
-            System.out.println(0);
+        //randomizedQuickSort(a, 0, n - 1);
+        a = quickSort(a);
+        for (int i = 0; i < n; i++) {
+            System.out.print(a.get(i) + " ");
         }
     }
+
     static class FastScanner {
         BufferedReader br;
         StringTokenizer st;
