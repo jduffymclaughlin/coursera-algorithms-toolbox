@@ -63,6 +63,8 @@ public class OtherClass {
             b[i] = scanner.nextInt();
         }
 
+        System.out.println();
+
         System.out.println(polyNaive(a, b));
 
         System.out.println(polyLessNaive(a, b));

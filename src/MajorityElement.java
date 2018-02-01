@@ -3,25 +3,54 @@ import java.io.*;
 
 public class MajorityElement {
 
+    private static ArrayList<Integer> quickSort(ArrayList<Integer> arr) {
 
-    private static int getMajorityElement(int[] a, int left, int right) {
+        if (arr.size() < 2) {
+            return arr;
+
+        } else {
+            Random rand = new Random();
+            int pivot = arr.get(rand.nextInt(arr.size()));
+
+            ArrayList more = new ArrayList<Integer>();
+            ArrayList same = new ArrayList<Integer>();
+            ArrayList less = new ArrayList<Integer>();
+
+            for (int i = 0; i < arr.size(); i++) {
+                if (arr.get(i) > pivot) {
+                    more.add(arr.get(i));
+                } else if (arr.get(i) == pivot) {
+                    same.add(arr.get(i));
+                } else {
+                    less.add(arr.get(i));
+                }
+            }
+
+            quickSort(less).addAll(same);
+            less.addAll(quickSort(more));
+            return less;
+        }
+    }
+
+
+    private static int getMajorityElement(ArrayList<Integer> a, int left, int right) {
         if (left == right) {
             return -1;
         }
         if (left + 1 == right) {
-            return a[left];
+            return a.get(left);
         }
 
-        for (int i = 0; i < a.length; i++) {
+        for (int i = 0; i < a.size(); i++) {
             int count = 0;
 
-            for (int j = 0; j < a.length; j++) {
-                if (a[i] == a[j]) {
+            for (int j = 0; j < a.size(); j++) {
+                if (a.get(i) == a.get(j)) {
                     count++;
                 }
             }
             
-            if (count > a.length / 2) {
+            if (count > a.size() / 2) {
                 return 1;
             }
         }
@@ -34,12 +63,14 @@ public class MajorityElement {
     public static void main(String[] args) {
         FastScanner scanner = new FastScanner(System.in);
         int n = scanner.nextInt();
-        int[] a = new int[n];
+        ArrayList<Integer> a = new ArrayList<Integer>();
         for (int i = 0; i < n; i++) {
-            a[i] = scanner.nextInt();
+            a.add(scanner.nextInt());
         }
+        a = quickSort(a);
+        //System.out.println(a);
 
-        if (getMajorityElement(a, 0, a.length) != -1) {
+        if (getMajorityElement(a, 0, a.size()) != -1) {
             System.out.println(1);
         } else {
             System.out.println(0);
