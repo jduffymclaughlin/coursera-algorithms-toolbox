@@ -29,7 +29,7 @@ public class MajorityElement {
             ArrayList<Integer> sorted = new ArrayList<Integer>();
             sorted.addAll(quickSort(less));
             sorted.addAll(same);
-            sorted.addAll(more);
+            sorted.addAll(quickSort(more));
 
             return sorted;
         }
