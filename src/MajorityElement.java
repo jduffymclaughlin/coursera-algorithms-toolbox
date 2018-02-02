@@ -35,48 +35,50 @@ public class MajorityElement {
         }
     }
 
+    private static int majorityElement(ArrayList<Integer> arr) {
+        int valBest = arr.get(0);
+        int countBest = 1;
+        int val = valBest;
+        int count = countBest;
 
-    private static int getMajorityElement(ArrayList<Integer> a, int left, int right) {
-        if (left == right) {
-            return -1;
-        }
-        if (left + 1 == right) {
-            return a.get(left);
-        }
+        arr = quickSort(arr);
 
-        for (int i = 0; i < a.size(); i++) {
-            int count = 0;
 
-            for (int j = 0; j < a.size(); j++) {
-                if (a.get(i) == a.get(j)) {
-                    count++;
-                }
+        for (int i = 1; i < arr.size(); i++) {
+            if (arr.get(i) == val) {
+                count++;
+            } else {
+                val = arr.get(i);
+                count = 1;
             }
-
-            if (count > Math.ceil(a.size() / 2)) {
-                return 1;
+            if (count > countBest) {
+                countBest = count;
+                valBest = val;
             }
         }
 
-        return -1;
+        //System.out.println(valBest + "  " + countBest + " " + count);
+        if (countBest > arr.size() / 2) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
-
 
 
     public static void main(String[] args) {
         FastScanner scanner = new FastScanner(System.in);
         int n = scanner.nextInt();
-        ArrayList<Integer> a = new ArrayList<Integer>();
+        ArrayList<Integer> a = new ArrayList<>();
+
         for (int i = 0; i < n; i++) {
             a.add(scanner.nextInt());
         }
 
-        if (getMajorityElement(quickSort(a), 0, a.size()) != -1) {
-            System.out.println(1);
-        } else {
-            System.out.println(0);
-        }
+        System.out.println(majorityElement(a));
+
     }
+
     static class FastScanner {
         BufferedReader br;
         StringTokenizer st;
