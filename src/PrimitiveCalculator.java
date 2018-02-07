@@ -1,19 +1,33 @@
 import java.util.*;
 
 public class PrimitiveCalculator {
-    private static List<Integer> optimalSequence(int n) {
-        ArrayList<Integer> table = new ArrayList<Integer>();
-        List<Integer> seq = new ArrayList<Integer>();
+    private static int optimalSequence(int n) {
+        int[] table = new int[n + 1];
+        table[0] = 0;
+        int i = 1;
 
-        for (int i = 0; i <= n ; i++) {
-            seq = optimal_sequence(i);
+        while (i <= n) {
+            List<Integer> seq = new ArrayList<Integer>();
 
-            System.out.println(i + " " + seq);
-            table.add(seq.size());
+            table[i] = table[i - 1] + 1;
+
+            if (i % 2 == 0) {
+                int j = i / 2;
+
+                table[i] = Math.min(table[j] + 1, table[i]);
+            }
+
+            if (i % 3 == 0) {
+                int j = i / 3;
+                table[i] = Math.min(table[j] + 1, table[i]);
+            }
+            i++;
         }
-        System.out.println(table);
 
-        return seq;
+        System.out.println(seq);
+
+        return table[n];
+
     }
 
     private static List<Integer> optimal_sequence(int n) {
@@ -41,7 +55,7 @@ public class PrimitiveCalculator {
             System.out.print(x + " ");
         }
 
-        optimalSequence(n);
+        System.out.println("----" + optimalSequence(n));
     }
 }
 
