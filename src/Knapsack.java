@@ -3,7 +3,6 @@ import java.util.*;
 public class Knapsack {
 
     static int optimalWeight(int W, int[] w) {
-        //write you code here
 
         int[][] matrix = new int[w.length + 1][W + 1];
 
@@ -16,40 +15,20 @@ public class Knapsack {
                     matrix[i][j] = 0;
                 else {
 
-                    matrix[i][j] = j;
-                    for (int n : w){
-                        //System.out.println(n);
-                        if (matrix[i][j] >= n)
-                            matrix[i][j] += n;
+                    matrix[i][j] = matrix[i-1][j];
 
-
-
-
-
+                    if (w[i-1] <= j){
+                        int value = matrix[i-1][j - w[i-1]] + w[i-1];
+                        if (value > matrix[i][j]) {
+                            matrix[i][j] = value;
+                        }
                     }
-//                    if (w[i + 1] >= j)
-//                        matrix[i][j] += j;
-
-                    matrix[i][j] = i * j;
-
-
-
-
-
                 }
             }
-            System.out.println(Arrays.toString(matrix[i]));
+            //System.out.println(Arrays.toString(matrix[i]));
         }
 
-
-
-        int result = 0;
-        for (int i = 0; i < w.length; i++) {
-            if (result + w[i] <= W) {
-                result += w[i];
-            }
-        }
-        return result;
+        return matrix[w.length][W];
     }
 
     public static void main(String[] args) {
